@@ -56,8 +56,11 @@ namespace Objectia.Tests
         [TestMethod]
         public async Task GetBulkLocation()
         {
-            var locations = await Api.GeoLocation.GetBulk(new String[]{"8.8.8.8", "google.com"}); 
+            var locations = await Api.GeoLocation.GetBulk(new String[]{"8.8.8.8", "apple.com"}); 
             Assert.AreEqual(2, locations.Count);
+            foreach (var l in locations) {
+                Assert.AreEqual("US", l.CountryCode);
+            }
         }
     }
 }
