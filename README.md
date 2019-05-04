@@ -11,10 +11,16 @@ See the [C# API docs](https://docs.objectia.com/guide/csharp.html).
 
 ## Installation
 
-With .NET Core 
+With .NET CLI 
 
 ```bash
-dotnet add package Objectia
+dotnet add package Objectia --version 1.0.0
+```    
+
+With Package Manager
+
+```bash
+PM> Install-Package Objectia -Version 1.0.0
 ```    
 
 
