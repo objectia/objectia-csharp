@@ -13,13 +13,13 @@ See the [C# API docs](https://docs.objectia.com/guide/csharp.html).
 
 With .NET CLI 
 
-```bash
+```powershell
 dotnet add package Objectia --version 1.0.0
 ```    
 
 With Package Manager
 
-```bash
+```powershell
 PM> Install-Package Objectia -Version 1.0.0
 ```    
 
@@ -29,6 +29,7 @@ PM> Install-Package Objectia -Version 1.0.0
 The library needs to be configured with your account's API key. Get your own API key by signing up for a free [Objectia account](https://objectia.com).
 
 ```csharp
+using System;
 using Objectia;
 using Objectia.Api;
 using Objectia.Exceptions;
