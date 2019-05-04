@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 2.2.0
+dotnet: 2.2.106
 
 #before_install:
 #  - npm -g install git+https://git@github.com/objectia/twostep-mock-server.git
