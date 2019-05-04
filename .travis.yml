@@ -8,7 +8,6 @@ dotnet: 2.1.502
 #  - node /home/travis/.nvm/versions/node/$NODE_VER/lib/node_modules/twostep-mock-server/lib/index.js &
 
 script:
-  - dotnet restore  
   - dotnet build ./Objectia/
 #  - dotnet build ./Objectia.Tests/
 #  - dotnet test ./Objectia.Tests/
