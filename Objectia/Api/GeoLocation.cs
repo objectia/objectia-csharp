@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -91,7 +92,8 @@ namespace Objectia.Api
         public static async Task<GeoLocation> Get(string ip, string fields = null, bool hostname = false, bool security = false)
         {
             var client = ObjectiaClient.GetRestClient();
-            var data = await client.Get("/geoip/" + ip);
+            var query = makeQuery(fields, hostname, security);
+            var data = await client.Get("/geoip/" + ip + query);
             return JsonConvert.DeserializeObject<GeoLocation>(data);
         }
 
@@ -104,9 +106,29 @@ namespace Objectia.Api
         {
             var param = String.Join(",", ipList);
             var client = ObjectiaClient.GetRestClient();
-            var data = await client.Get("/geoip/" + param);
+            var query = makeQuery(fields, hostname, security);
+            var data = await client.Get("/geoip/" + param + query);
             return JsonConvert.DeserializeObject<List<GeoLocation>>(data);
         }
+
+        private static string makeQuery(string fields="", bool hostname=false, bool security=false) {
+            StringBuilder sb = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(fields)) {
+                sb.Append("?fields="+fields);
+            }
+            if (hostname) {
+                sb.Append(sb.Length == 0 ? "?" : "&");
+                sb.Append("hostname=true");
+            }
+            if (security) {
+                sb.Append(sb.Length == 0 ? "?" : "&");
+                sb.Append("security=true");
+            }
+
+            return sb.ToString();
+        }
+
     }
 
     public class IPCurrency
