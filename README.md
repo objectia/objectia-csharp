@@ -1,7 +1,7 @@
 # objectia-csharp
 [![Build Status](https://travis-ci.org/objectia/objectia-csharp.svg?branch=master)](https://travis-ci.org/objectia/objectia-csharp)
 
-C#/.NET client for [Objectia API](https://objectia.com)
+C#/.NET client for [Objectia API](https://objectia.com)&reg;
 
  
 ## Documentation
