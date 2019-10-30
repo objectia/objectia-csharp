@@ -5,16 +5,21 @@ namespace Objectia
         ///
         /// Client version.
         ///
-        public static string VERSION = "0.9.1";
+        public static string VERSION = "0.9.2";
 
         ///
         /// Live API URL
         ///
-        public const string API_BASE_URL = "https://api.objectia.com/rest/v1";
+        public const string API_BASE_URL = "https://api.objectia.com";
 
         ///
         /// Default timeout is 30 seconds.
         ///
         public const int DEFAULT_TIMEOUT = 30; // in seconds
+
+        ///
+        /// Maxiumum number of recipients per mail message
+        ///
+        public const int MAX_RECIPIENTS = 50;    
     }
 }

@@ -15,10 +15,10 @@ namespace Objectia.Api
 
         private Usage() {}
 
-        public static async Task<Usage> Get() 
+        public static async Task<Usage> GetAsync() 
         {
             var client = ObjectiaClient.GetRestClient();
-            var data = await client.Get("/usage");
+            var data = await client.GetAsync("/v1/usage");
             return JsonConvert.DeserializeObject<Usage>(data);
         }
     }

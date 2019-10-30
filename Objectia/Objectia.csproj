@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Label="Build">
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <Version>0.9.1</Version>
     <AssemblyVersion>0.9.1.0</AssemblyVersion>
     <AssemblyFileVersion>0.9.1.0</AssemblyFileVersion>
@@ -26,7 +26,7 @@
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2"/>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2"/>
     <None Include="LICENSE.txt" Pack="true" PackagePath="/LICENSE.txt"/>
   </ItemGroup>
 </Project>

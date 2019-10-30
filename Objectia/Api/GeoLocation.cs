@@ -89,25 +89,25 @@ namespace Objectia.Api
 
         private GeoLocation() { }
 
-        public static async Task<GeoLocation> Get(string ip, string fields = null, bool hostname = false, bool security = false)
+        public static async Task<GeoLocation> GetAsync(string ip, string fields = null, bool hostname = false, bool security = false)
         {
             var client = ObjectiaClient.GetRestClient();
             var query = makeQuery(fields, hostname, security);
-            var data = await client.Get("/geoip/" + ip + query);
+            var data = await client.GetAsync("/v1/geoip/" + ip + query);
             return JsonConvert.DeserializeObject<GeoLocation>(data);
         }
 
-        public static async Task<GeoLocation> GetCurrent(string fields = null, bool hostname = false, bool security = false)
+        public static async Task<GeoLocation> GetCurrentAsync(string fields = null, bool hostname = false, bool security = false)
         {
-            return await GeoLocation.Get("myip", fields, hostname, security);
+            return await GeoLocation.GetAsync("myip", fields, hostname, security);
         }
 
-        public static async Task<List<GeoLocation>> GetBulk(string[] ipList, string fields = null, bool hostname = false, bool security = false)
+        public static async Task<List<GeoLocation>> GetBulkAsync(string[] ipList, string fields = null, bool hostname = false, bool security = false)
         {
             var param = String.Join(",", ipList);
             var client = ObjectiaClient.GetRestClient();
             var query = makeQuery(fields, hostname, security);
-            var data = await client.Get("/geoip/" + param + query);
+            var data = await client.GetAsync("/v1/geoip/" + param + query);
             return JsonConvert.DeserializeObject<List<GeoLocation>>(data);
         }
 

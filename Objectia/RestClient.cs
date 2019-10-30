@@ -61,46 +61,40 @@ namespace Objectia
         }
 
 
-        public async Task<string> Get(string path)
+        public async Task<string> GetAsync(string path)
         {
             return await Execute("GET", path);
         }
 
-        public async Task<string> Post(string path, JObject payload)
+        public async Task<string> PostAsync(string path, HttpContent payload)
         {
             return await Execute("POST", path, payload);
         }
 
-        public async Task<string> Put(string path, JObject payload)
+        public async Task<string> PutAsync(string path, HttpContent payload)
         {
             return await Execute("PUT", path, payload);
         }
-        public async Task<string> Patch(string path, JObject payload)
+        public async Task<string> PatchAsync(string path, HttpContent payload)
         {
             return await Execute("PATCH", path, payload);
         }
 
-        public async Task<string> Delete(string path)
+        public async Task<string> DeleteAsync(string path)
         {
             return await Execute("DELETE", path);
         }
 
-        protected async Task<string> Execute(string method, string path, JObject data = null)
+        protected async Task<string> Execute(string method, string path, HttpContent payload = null)
         {
             try
             {
                 var client = new HttpClient();
                 client.Timeout = new TimeSpan(0, 0, this.Timeout);
                 client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
                 client.DefaultRequestHeaders.Add("User-Agent", this.UserAgent);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + this.ApiKey);
-
-                StringContent payload = null;
-                if (data != null)
-                {
-                    payload = new StringContent(data.ToString(Formatting.None), Encoding.UTF8, "application/json");
-                }
 
                 HttpResponseMessage response = null;
                 switch (method)
@@ -128,14 +122,17 @@ namespace Objectia
                     }
 
                     JObject obj = JObject.Parse(content);
-                    var result = obj["data"].ToString();
-
+                    string result = string.Empty;
+                    if (obj["data"] != null) {
+                        result = obj["data"].ToString();
+                    }
                     return result;    
                 }
                 else
                 {
                     int statusCode = (int)response.StatusCode;
                     var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(content);
                     if (response.Content != null)
                     {
                         response.Content.Dispose();
