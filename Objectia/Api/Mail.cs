@@ -136,12 +136,14 @@ namespace Objectia.Api
                 content.Add(new StringContent(this.FromName), "from_name");
             }
             
-            content.Add(new StringContent(string.Join(",", this.To)), "to");
-            if (this.Cc.Count > 0) {
-                content.Add(new StringContent(string.Join(",", this.Cc)), "cc");
+            foreach (var v in this.To) {
+                content.Add(new StringContent(v), "to");
             }
-            if (this.Bcc.Count > 0) {
-                content.Add(new StringContent(string.Join(",", this.Bcc)), "bcc");
+            foreach (var v in this.Cc) {
+                content.Add(new StringContent(v), "cc");
+            }
+            foreach (var v in this.Bcc) {
+                content.Add(new StringContent(v), "bcc");
             }
 
             content.Add(new StringContent(this.Subject), "subject");
@@ -150,8 +152,8 @@ namespace Objectia.Api
                 content.Add(new StringContent(this.HTML), "html");
             }
 
-            if (this.Tags.Count > 0) {
-                content.Add(new StringContent(string.Join(",", this.Tags)), "tags");
+            foreach (var v in this.Tags) {
+                content.Add(new StringContent(v), "tags");
             }
             
             if (!string.IsNullOrEmpty(this.Charset)) {

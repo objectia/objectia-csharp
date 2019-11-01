@@ -35,8 +35,8 @@ namespace Objectia.Tests
         [TestMethod]
         public async Task SendMail()
         {
-            var message = new Message("ok@demo2.org", "Test", "This is a test", "ok@demo2.org");
-            message.AddAttachment("/Users/otto/me.png");
+            var message = new Message("ok@demo2.org", "Test", "This is a test", "ok@demo2.org", "okei@demo2.org");
+            //message.AddAttachment("/Users/otto/me.png");
             var receipt = await Api.Mail.SendAsync(message); 
             Assert.IsNull(receipt.ID);
             Assert.AreNotEqual(1, receipt.AcceptedRecipients);
