@@ -86,7 +86,7 @@ namespace Objectia.Api
         public bool? VerifyCertificate { get; set; }
         public bool? OpenTracking { get; set; }
         public bool? ClickTracking { get; set; }
-        public bool? HTMLOnlyClickTracking { get; set; }
+        public bool? PlainTextClickTracking { get; set; }
         public bool? UnsubscribeTracking { get; set; }
         public bool? TestMode { get; set; }
 
@@ -172,8 +172,8 @@ namespace Objectia.Api
             if (this.ClickTracking != null) {
                 content.Add(new StringContent(this.ClickTracking.Value.ToString()), "click_tracking");
             }
-            if (this.HTMLOnlyClickTracking != null) {
-                content.Add(new StringContent(this.HTMLOnlyClickTracking.Value.ToString()), "html_click_tracking");
+            if (this.PlainTextClickTracking != null) {
+                content.Add(new StringContent(this.PlainTextClickTracking.Value.ToString()), "text_click_tracking");
             }
             if (this.UnsubscribeTracking != null) {
                 content.Add(new StringContent(this.UnsubscribeTracking.Value.ToString()), "unsubscribe_tracking");
