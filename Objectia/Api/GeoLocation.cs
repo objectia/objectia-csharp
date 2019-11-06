@@ -4,13 +4,56 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Linq;
-
-using Objectia;
 
 namespace Objectia.Api
 {
     public class GeoLocation
+    {
+        private GeoLocation() { }
+
+        public static async Task<IPLocation> GetAsync(string ip, string fields = null, bool hostname = false, bool security = false)
+        {
+            var client = ObjectiaClient.GetRestClient();
+            var query = makeQuery(fields, hostname, security);
+            var data = await client.GetAsync("/v1/geoip/" + ip + query);
+            return JsonConvert.DeserializeObject<IPLocation>(data);
+        }
+
+        public static async Task<IPLocation> GetCurrentAsync(string fields = null, bool hostname = false, bool security = false)
+        {
+            return await GeoLocation.GetAsync("myip", fields, hostname, security);
+        }
+
+        public static async Task<List<IPLocation>> GetBulkAsync(string[] ipList, string fields = null, bool hostname = false, bool security = false)
+        {
+            var param = String.Join(",", ipList);
+            var client = ObjectiaClient.GetRestClient();
+            var query = makeQuery(fields, hostname, security);
+            var data = await client.GetAsync("/v1/geoip/" + param + query);
+            return JsonConvert.DeserializeObject<List<IPLocation>>(data);
+        }
+
+        private static string makeQuery(string fields="", bool hostname=false, bool security=false) {
+            StringBuilder sb = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(fields)) {
+                sb.Append("?fields="+fields);
+            }
+            if (hostname) {
+                sb.Append(sb.Length == 0 ? "?" : "&");
+                sb.Append("hostname=true");
+            }
+            if (security) {
+                sb.Append(sb.Length == 0 ? "?" : "&");
+                sb.Append("security=true");
+            }
+
+            return sb.ToString();
+        }
+
+    }
+
+    public class IPLocation
     {
         [JsonProperty("ip")]
         public string IpAddress { get; set; }
@@ -86,49 +129,6 @@ namespace Objectia.Api
 
         [JsonProperty("security")]
         public IPSecurity Security { get; set; }
-
-        private GeoLocation() { }
-
-        public static async Task<GeoLocation> GetAsync(string ip, string fields = null, bool hostname = false, bool security = false)
-        {
-            var client = ObjectiaClient.GetRestClient();
-            var query = makeQuery(fields, hostname, security);
-            var data = await client.GetAsync("/v1/geoip/" + ip + query);
-            return JsonConvert.DeserializeObject<GeoLocation>(data);
-        }
-
-        public static async Task<GeoLocation> GetCurrentAsync(string fields = null, bool hostname = false, bool security = false)
-        {
-            return await GeoLocation.GetAsync("myip", fields, hostname, security);
-        }
-
-        public static async Task<List<GeoLocation>> GetBulkAsync(string[] ipList, string fields = null, bool hostname = false, bool security = false)
-        {
-            var param = String.Join(",", ipList);
-            var client = ObjectiaClient.GetRestClient();
-            var query = makeQuery(fields, hostname, security);
-            var data = await client.GetAsync("/v1/geoip/" + param + query);
-            return JsonConvert.DeserializeObject<List<GeoLocation>>(data);
-        }
-
-        private static string makeQuery(string fields="", bool hostname=false, bool security=false) {
-            StringBuilder sb = new StringBuilder();
-
-            if (!string.IsNullOrEmpty(fields)) {
-                sb.Append("?fields="+fields);
-            }
-            if (hostname) {
-                sb.Append(sb.Length == 0 ? "?" : "&");
-                sb.Append("hostname=true");
-            }
-            if (security) {
-                sb.Append(sb.Length == 0 ? "?" : "&");
-                sb.Append("security=true");
-            }
-
-            return sb.ToString();
-        }
-
     }
 
     public class IPCurrency

@@ -18,11 +18,11 @@ namespace Objectia.Api
         private Mail() {}
 
         /// <summary>
-        /// Send a message async
+        /// Send a mail message async
         /// </summary>
         /// <param name="message">The message to send</param>
         /// <returns></returns>
-        public static async Task<MailReceipt> SendAsync(Message message) 
+        public static async Task<MailReceipt> SendAsync(MailMessage message) 
         {
             //check for parameters
             ThrowIf.IsArgumentNull(() => message);
@@ -31,20 +31,6 @@ namespace Objectia.Api
             var resp = await client.PostAsync("/v1/mail/send", message.AsFormContent()); 
             return JsonConvert.DeserializeObject<MailReceipt>(resp);
         }
-
-        public static async Task<MailReceipt> Test() 
-        {
-            var client = ObjectiaClient.GetRestClient();
-
-            var data = new JObject(
-                new JProperty("name", "Joey User")
-            );
-            var content = new StringContent(data.ToString(Formatting.None), Encoding.UTF8, "application/json"); 
-
-            var resp = await client.PostAsync("/v1/test", content); 
-            return JsonConvert.DeserializeObject<MailReceipt>(resp);
-        }
-
     }
 
     public class MailReceipt
@@ -60,16 +46,16 @@ namespace Objectia.Api
     }
 
 
-    public class Message {
+    public class MailMessage {
         ///
         /// Default constructor should not be used, hence private.
         ///
-        private Message() {}
+        private MailMessage() {}
 
         ///
         /// Constructor
         ///
-        public Message(string from, string subject, string text, params string[] to) {
+        public MailMessage(string from, string subject, string text, params string[] to) {
             this.From = from;
             this.Subject = subject;
             this.Text = text;

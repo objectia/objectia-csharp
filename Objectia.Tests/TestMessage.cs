@@ -31,11 +31,11 @@ namespace Objectia.Tests
         [TestMethod]
         public void Message()
         {
-            var message = new Message("otto@doseth.com", "Test", "This is a test", "otto@doseth.com");
-            Assert.AreEqual("otto@doseth.com", message.From);
+            var message = new MailMessage("ok@demo2.org", "Test", "This is a test", "ok@demo2.org");
+            Assert.AreEqual("ok@demo2.org", message.From);
             Assert.AreEqual("Test", message.Subject);
             Assert.AreEqual("This is a test", message.Text);
-            CollectionAssert.Contains(message.To, "otto@doseth.com");
+            CollectionAssert.Contains(message.To, "ok@demo2.org");
 
             Assert.AreEqual(null, message.RequireTLS);
 

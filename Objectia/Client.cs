@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
-using System.Text;
-using Newtonsoft.Json.Linq;
 
 namespace Objectia
 {
@@ -97,27 +94,5 @@ namespace Objectia
         {
             _restClient = null;
         }
-       
-        /*
-        public async Task<User> CreateUser(string email, string phone, int countryCode, bool force = false)
-        {
-            JObject payload = new JObject();
-            payload.Add("email", email);
-            payload.Add("phone", phone);
-            payload.Add("country_code", countryCode);
-
-            var response = await this.RestClient.Post("/users", payload);
-            return User.FromJSON(response);
-        }
-
-        ///
-        /// Get user status.
-        ///
-        public async Task<User> GetUser(string userId)
-        {
-            var response = await Get("/v1/users/" + Uri.EscapeDataString(userId));
-            return User.FromJSON(response);
-        }
-*/
     }
 }
