@@ -119,7 +119,7 @@ namespace Objectia.Api
         public string FlagEmoji { get; set; }
 
         [JsonProperty("is_eu")]
-        public Boolean IsEU = false;
+        public bool IsEU { get; set; }
 
         [JsonProperty("internet_tld")]
         public string TLD { get; set; }

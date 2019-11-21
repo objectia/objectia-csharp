@@ -33,6 +33,13 @@ namespace Objectia.Tests
         }
 
         [TestMethod]
+        public void GetVersion()
+        {
+            var version = ObjectiaClient.Version;
+            Assert.AreEqual(Constants.VERSION, version);
+        }
+
+        [TestMethod]
         public async Task GetUsage()
         {
             var usage = await Api.Usage.GetAsync(); 
@@ -67,12 +74,12 @@ namespace Objectia.Tests
         public async Task GetLocationFail()
         {
             try {
-                var location = await Api.GeoLocation.GetAsync("8"); 
+                var location = await Api.GeoLocation.GetAsync("x"); 
                 Assert.AreEqual("US", location.CountryCode);
             } catch (ResponseException e) {
-                Assert.AreEqual(404, e.Status);
-                Assert.AreEqual("err-ip-not-found", e.Code);
-                Assert.AreEqual("IP address not found", e.Message);
+                Assert.AreEqual(400, e.Status);
+                Assert.AreEqual("err-invalid-ip", e.Code);
+                Assert.AreEqual("Invalid IP address", e.Message);
             }
         }
 

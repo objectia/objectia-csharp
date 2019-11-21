@@ -94,5 +94,11 @@ namespace Objectia
         {
             _restClient = null;
         }
+
+        public static string Version {
+            get {
+                return Constants.VERSION;
+            }
+        }
     }
 }
