@@ -64,6 +64,19 @@ namespace Objectia.Tests
         }
 
         [TestMethod]
+        public async Task GetLocationFail()
+        {
+            try {
+                var location = await Api.GeoLocation.GetAsync("8"); 
+                Assert.AreEqual("US", location.CountryCode);
+            } catch (ResponseException e) {
+                Assert.AreEqual(404, e.Status);
+                Assert.AreEqual("err-ip-not-found", e.Code);
+                Assert.AreEqual("IP address not found", e.Message);
+            }
+        }
+
+        [TestMethod]
         public async Task SendMail()
         {
             var message = new MailMessage("ok@demo2.org", "Test", "This is a test", "ok@demo2.org", "okei@demo2.org");
