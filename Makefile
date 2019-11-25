@@ -7,7 +7,7 @@ build:
 	dotnet build ./Objectia/
 
 pack:
-	dotnet pack ./Objectia/ 
+	dotnet pack -c Release ./Objectia/ 
 
 clean:
 	dotnet clean ./Objectia/
