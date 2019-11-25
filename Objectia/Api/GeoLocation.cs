@@ -200,6 +200,29 @@ namespace Objectia.Api
     public class IPSecurity
     {
         public IPSecurity() { }
-    }
 
+        [JsonProperty("is_proxy")]
+        public bool IsProxy { get; set; }   
+
+        [JsonProperty("proxy_type")]
+        public string ProxyType { get; set; }   
+
+        [JsonProperty("is_crawler")]
+        public bool IsCrawler { get; set; }   
+
+        [JsonProperty("crawler_name")]
+        public string CrawlerName { get; set; }   
+
+        [JsonProperty("crawler_type")]
+        public string CrawlerType { get; set; }   
+
+        [JsonProperty("is_tor")]
+        public bool IsTOR { get; set; }   
+
+        [JsonProperty("threat_level")]
+        public string ThreatLevel { get; set; }   
+
+        [JsonProperty("threat_types")]
+        public string[] ThreatTypes { get; set; }   
+    }
 }

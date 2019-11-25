@@ -46,11 +46,20 @@ namespace Objectia.Tests
             Assert.AreNotEqual(0, usage.GeoLocationRequests);
         }
 
-        [TestMethod]
         public async Task GetLocation()
         {
             var location = await Api.GeoLocation.GetAsync("8.8.8.8"); 
             Assert.AreEqual("US", location.CountryCode);
+        }
+
+        [TestMethod]
+        public async Task GetLocationWithSecurityInfo()
+        {
+            var location = await Api.GeoLocation.GetAsync("8.8.8.8", null, false, true); 
+            Assert.AreEqual(false, location.Security.IsCrawler);
+            Assert.AreEqual(true, location.Security.IsProxy);
+            Assert.AreEqual("DCH", location.Security.ProxyType);
+            Assert.AreEqual(false, location.Security.IsTOR);
         }
 
         [TestMethod]
