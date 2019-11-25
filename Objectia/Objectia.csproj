@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Label="Build">
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Version>0.9.2</Version>
-    <AssemblyVersion>0.9.2.0</AssemblyVersion>
-    <AssemblyFileVersion>0.9.2.0</AssemblyFileVersion>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
     <AssemblyCompany>UAB Salesfly</AssemblyCompany>
     <AssemblyProduct>CSharp client for Objectia API</AssemblyProduct>
     <AssemblyCopyright>Copyright © 2019 UAB Salesfly</AssemblyCopyright>
