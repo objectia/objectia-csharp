@@ -5,7 +5,7 @@ namespace Objectia
         ///
         /// Client version.
         ///
-        public static string VERSION = "0.9.2";
+        public static string VERSION = "1.0.0";
 
         ///
         /// Live API URL
