@@ -1,11 +1,6 @@
 language: csharp
 mono: none
-dotnet: 2.1.502
-
-#before_install:
-#  - npm -g install git+https://git@github.com/objectia/twostep-mock-server.git
-#  - NODE_VER=`node --version`
-#  - node /home/travis/.nvm/versions/node/$NODE_VER/lib/node_modules/twostep-mock-server/lib/index.js &
+dotnet: 3.0.100
 
 script:
   - dotnet build ./Objectia/

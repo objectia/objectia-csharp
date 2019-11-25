@@ -6,7 +6,17 @@ C#/.NET client for [Objectia API](https://objectia.com)&reg;
  
 ## Documentation
 
-See the [C# API docs](https://docs.objectia.com/guide/csharp.html).
+See the [C# API docs](https://docs.objectia.com/csharp/).
+
+## Requirements
+
+The C# client for Objectia API requires .NET Core 3.0 or later to be installed. You can check if you already have .NET Core installed on your machine by opening up a command prompt or terminal and running the following command:
+
+```bash
+dotnet --version
+```
+
+You should see something like 3.0.100. If you receive an error message, you can [download .NET Core from Microsoft](https://www.microsoft.com/net/) and install it.
 
 
 ## Installation
