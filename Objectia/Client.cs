@@ -2,21 +2,21 @@
 
 namespace Objectia
 {
-    public class ObjectiaClient 
+    public class ObjectiaClient
     {
         private static string _apiKey;
         private static int _timeout = 30;
 
-        private static RestClient _restClient = null;
+        private static RestClient2 _restClient = null;
 
-        private ObjectiaClient() {}
+        private ObjectiaClient() { }
 
         /// <summary>
         /// Initialize the client with apikey and timeout
         /// </summary>
         /// <param name="apiKey">API key</param>
         /// <param name="timeout">Connection timeout</param>
-        public static void Init(string apiKey, int timeout=30)
+        public static void Init(string apiKey, int timeout = 30)
         {
             SetApiKey(apiKey);
             SetTimeout(timeout);
@@ -59,7 +59,7 @@ namespace Objectia
         /// Get the rest client
         /// </summary>
         /// <returns>The rest client</returns>
-        public static RestClient GetRestClient()
+        public static RestClient2 GetRestClient()
         {
             if (_restClient != null)
             {
@@ -74,15 +74,15 @@ namespace Objectia
                 );
             }
 
-            _restClient = new RestClient(_apiKey, _timeout);
+            _restClient = new RestClient2(_apiKey, _timeout);
             return _restClient;
         }
 
-         /// <summary>
+        /// <summary>
         /// Set the rest client
         /// </summary>
         /// <param name="restClient">Rest Client to use</param>
-        public static void SetRestClient(RestClient restClient)
+        public static void SetRestClient(RestClient2 restClient)
         {
             _restClient = restClient;
         }
@@ -95,8 +95,10 @@ namespace Objectia
             _restClient = null;
         }
 
-        public static string Version {
-            get {
+        public static string Version
+        {
+            get
+            {
                 return Constants.VERSION;
             }
         }

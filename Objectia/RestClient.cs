@@ -13,7 +13,7 @@ using Objectia.Exceptions;
 
 namespace Objectia
 {
-    public class RestClient
+    public class RestClient2
     {
         #region --- Properties ---        
 
@@ -22,7 +22,7 @@ namespace Objectia
         public string ApiKey { get; private set; }
 
         public string ApiBaseUrl { get; set; }
-        
+
         public int Timeout
         {
             get { return _timeout; }
@@ -43,14 +43,15 @@ namespace Objectia
         ///
         /// Constructor.
         ///
-        public RestClient(string apiKey, int? timeout)
+        public RestClient2(string apiKey, int? timeout)
         {
             this.ApiBaseUrl = Constants.API_BASE_URL;
             this.UserAgent = "objectia-csharp/" + Constants.VERSION;
 
             this.ApiKey = apiKey;
 
-            if (timeout.HasValue) {
+            if (timeout.HasValue)
+            {
                 this.Timeout = timeout.Value;
             }
 
@@ -123,10 +124,11 @@ namespace Objectia
 
                     JObject obj = JObject.Parse(content);
                     string result = string.Empty;
-                    if (obj["data"] != null) {
+                    if (obj["data"] != null)
+                    {
                         result = obj["data"].ToString();
                     }
-                    return result;    
+                    return result;
                 }
                 else
                 {

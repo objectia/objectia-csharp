@@ -6,7 +6,7 @@
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
     <AssemblyCompany>UAB Salesfly</AssemblyCompany>
     <AssemblyProduct>CSharp client for Objectia API</AssemblyProduct>
-    <AssemblyCopyright>Copyright © 2019 UAB Salesfly</AssemblyCopyright>
+    <AssemblyCopyright>Copyright © 2020 UAB Salesfly</AssemblyCopyright>
   </PropertyGroup>
   <PropertyGroup Label="Package">
     <PackageVersion>$(version)</PackageVersion>
@@ -14,19 +14,20 @@
     <Authors>objectia</Authors>
     <Title>Objectia API client</Title>
     <Description>CSharp client for Objectia API</Description>
-    <Copyright>Copyright © 2019 UAB Salesfly</Copyright>
+    <Copyright>Copyright © 2020 UAB Salesfly</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/objectia/objectia-csharp</PackageProjectUrl>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageTags>objectia;api;geoip;geolocation;</PackageTags>
+    <PackageTags>objectia;api;geoip;geolocation;currency;mail;sms;pdf;</PackageTags>
     <IncludeSymbols>false</IncludeSymbols>
     <IncludeSource>false</IncludeSource>
     <RepositoryUrl>https://github.com/objectia/objectia-csharp.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2"/>
+    <PackageReference Include="RestSharp" Version="106.10.1"/>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3"/>
     <None Include="LICENSE.txt" Pack="true" PackagePath="/LICENSE.txt"/>
   </ItemGroup>
 </Project>

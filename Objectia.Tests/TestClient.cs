@@ -42,20 +42,21 @@ namespace Objectia.Tests
         [TestMethod]
         public async Task GetUsage()
         {
-            var usage = await Api.Usage.GetAsync(); 
-            Assert.AreNotEqual(0, usage.GeoLocationRequests);
+            var usage = await Api.Usage.GetAsync();
+            Assert.AreNotEqual(0, usage.Requests["geoip"]);
+            //Spew.Dump(usage);
         }
 
         public async Task GetLocation()
         {
-            var location = await Api.GeoLocation.GetAsync("8.8.8.8"); 
+            var location = await Api.GeoLocation.GetAsync("8.8.8.8");
             Assert.AreEqual("US", location.CountryCode);
         }
 
         [TestMethod]
         public async Task GetLocationWithSecurityInfo()
         {
-            var location = await Api.GeoLocation.GetAsync("8.8.8.8", null, false, true); 
+            var location = await Api.GeoLocation.GetAsync("8.8.8.8", null, false, true);
             Assert.AreEqual(false, location.Security.IsCrawler);
             Assert.AreEqual(true, location.Security.IsProxy);
             Assert.AreEqual("DCH", location.Security.ProxyType);
@@ -65,16 +66,17 @@ namespace Objectia.Tests
         [TestMethod]
         public async Task GetCurrentLocation()
         {
-            var location = await Api.GeoLocation.GetCurrentAsync(); 
+            var location = await Api.GeoLocation.GetCurrentAsync();
             Assert.AreEqual("LT", location.CountryCode);
         }
 
         [TestMethod]
         public async Task GetBulkLocation()
         {
-            var locations = await Api.GeoLocation.GetBulkAsync(new String[]{"8.8.8.8", "apple.com"}); 
+            var locations = await Api.GeoLocation.GetBulkAsync(new String[] { "8.8.8.8", "apple.com" });
             Assert.AreEqual(2, locations.Count);
-            foreach (var l in locations) {
+            foreach (var l in locations)
+            {
                 Assert.AreEqual("US", l.CountryCode);
             }
         }
@@ -82,10 +84,13 @@ namespace Objectia.Tests
         [TestMethod]
         public async Task GetLocationFail()
         {
-            try {
-                var location = await Api.GeoLocation.GetAsync("x"); 
+            try
+            {
+                var location = await Api.GeoLocation.GetAsync("x");
                 Assert.AreEqual("US", location.CountryCode);
-            } catch (ResponseException e) {
+            }
+            catch (ResponseException e)
+            {
                 Assert.AreEqual(400, e.Status);
                 Assert.AreEqual("err-invalid-ip", e.Code);
                 Assert.AreEqual("Invalid IP address", e.Message);
@@ -97,10 +102,33 @@ namespace Objectia.Tests
         {
             var message = new MailMessage("ok@demo2.org", "Test", "This is a test", "ok@demo2.org", "okei@demo2.org");
             message.AddAttachment("/Users/otto/me.png");
-            var receipt = await Api.Mail.SendAsync(message); 
+            var receipt = await Api.Mail.SendAsync(message);
             Assert.IsNull(receipt.ID);
             Assert.AreNotEqual(1, receipt.AcceptedRecipients);
             Assert.AreEqual(0, receipt.RejectedRecipients);
+        }
+
+        [TestMethod]
+        public async Task SendSMS()
+        {
+            var from = "Objectia";
+            var to = Environment.GetEnvironmentVariable("MY_PHONE_NUMBER");
+            var text = "This a test from C#";
+
+            var receipt = await Api.SMS.SendAsync(from, to, text);
+            Assert.AreEqual(from, receipt.From);
+            Assert.AreEqual(to, receipt.To);
+            Assert.AreEqual(text, receipt.Text);
+        }
+
+        [TestMethod]
+        public async Task CreatePDF()
+        {
+            var options = new PDFOptions();
+            options.DocumentHTML = "<html>This is a test</html>";
+
+            var buf = await Api.PDF.CreateAsync(options);
+            Assert.IsNull(buf);
         }
     }
 }
