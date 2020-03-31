@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-using Objectia;
 using Objectia.Exceptions;
 
 namespace Objectia.Api
 {
-    public class Mail
+    public class Mail : ApiBase
     {
         private Mail() { }
 
@@ -26,9 +25,17 @@ namespace Objectia.Api
             //check for parameters
             ThrowIf.IsArgumentNull(() => message);
 
-            var client = ObjectiaClient.GetRestClient();
-            var resp = await client.PostAsync("/v1/mail/send", message.AsFormContent());
-            return JsonConvert.DeserializeObject<MailReceipt>(resp);
+            var client = new HttpClient();
+            client.Timeout = new TimeSpan(0, 0, ObjectiaClient.GetTimeout());
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Add("User-Agent", "objectia-csharp/" + Constants.VERSION);
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ObjectiaClient.GetApiKey());
+            client.DefaultRequestHeaders.Add("Accept", "application/pdf");
+
+            var payload = message.ToContent();
+
+            var response = await client.PostAsync(Constants.API_BASE_URL + "/v1/mail/send", payload);
+            return await ParseResponse<MailReceipt>(response);
         }
     }
 
@@ -117,7 +124,7 @@ namespace Objectia.Api
             }
         }
 
-        public HttpContent AsFormContent()
+        public MultipartFormDataContent ToContent()
         {
             var content = new MultipartFormDataContent();
 

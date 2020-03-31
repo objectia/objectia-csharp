@@ -13,9 +13,11 @@ using Objectia.Exceptions;
 
 namespace Objectia
 {
-    public class RestClient2
+    public class ObjectiaRestClient
     {
         #region --- Properties ---        
+
+        protected RestClient _client;
 
         protected int _timeout = Constants.DEFAULT_TIMEOUT;
 
@@ -43,7 +45,7 @@ namespace Objectia
         ///
         /// Constructor.
         ///
-        public RestClient2(string apiKey, int? timeout)
+        public ObjectiaRestClient(string apiKey, int? timeout)
         {
             this.ApiBaseUrl = Constants.API_BASE_URL;
             this.UserAgent = "objectia-csharp/" + Constants.VERSION;
@@ -59,6 +61,9 @@ namespace Objectia
             {
                 throw new ArgumentException("No API key provided");
             }
+
+            _client = new RestClient(this.ApiBaseUrl);
+            _client.Timeout = this.Timeout * 1000;
         }
 
 

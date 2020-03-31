@@ -48,7 +48,7 @@ namespace Objectia.Tests
             message.RequireTLS = null;
             Assert.AreEqual(null, message.RequireTLS);
 
-            var fc = message.AsFormContent();
+            var fc = message.ToContent();
             Console.WriteLine(fc);
 
         }

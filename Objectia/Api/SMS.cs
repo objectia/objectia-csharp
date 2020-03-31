@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Objectia.Api
 {
-    public class SMS
+    public class SMS : ApiBase
     {
         private SMS() { }
 
@@ -21,9 +21,8 @@ namespace Objectia.Api
 
             var payload = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
 
-            var client = ObjectiaClient.GetRestClient();
-            var resp = await client.PostAsync("/v1/sms/send", payload);
-            return JsonConvert.DeserializeObject<SMSReceipt>(resp);
+            var response = await PostJSON("/v1/sms/send", payload);
+            return await ParseResponse<SMSReceipt>(response);
         }
     }
 

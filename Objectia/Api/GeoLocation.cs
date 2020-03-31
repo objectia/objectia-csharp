@@ -7,16 +7,15 @@ using Newtonsoft.Json.Serialization;
 
 namespace Objectia.Api
 {
-    public class GeoLocation
+    public class GeoLocation : ApiBase
     {
         private GeoLocation() { }
 
         public static async Task<IPLocation> GetAsync(string ip, string fields = null, bool hostname = false, bool security = false)
         {
-            var client = ObjectiaClient.GetRestClient();
             var query = makeQuery(fields, hostname, security);
-            var data = await client.GetAsync("/v1/geoip/" + ip + query);
-            return JsonConvert.DeserializeObject<IPLocation>(data);
+            var response = await GetJSON("/v1/geoip/" + ip + query);
+            return await ParseResponse<IPLocation>(response);
         }
 
         public static async Task<IPLocation> GetCurrentAsync(string fields = null, bool hostname = false, bool security = false)
@@ -27,23 +26,26 @@ namespace Objectia.Api
         public static async Task<List<IPLocation>> GetBulkAsync(string[] ipList, string fields = null, bool hostname = false, bool security = false)
         {
             var param = String.Join(",", ipList);
-            var client = ObjectiaClient.GetRestClient();
             var query = makeQuery(fields, hostname, security);
-            var data = await client.GetAsync("/v1/geoip/" + param + query);
-            return JsonConvert.DeserializeObject<List<IPLocation>>(data);
+            var response = await GetJSON("/v1/geoip/" + param + query);
+            return await ParseResponse<List<IPLocation>>(response);
         }
 
-        private static string makeQuery(string fields="", bool hostname=false, bool security=false) {
+        private static string makeQuery(string fields = "", bool hostname = false, bool security = false)
+        {
             StringBuilder sb = new StringBuilder();
 
-            if (!string.IsNullOrEmpty(fields)) {
-                sb.Append("?fields="+fields);
+            if (!string.IsNullOrEmpty(fields))
+            {
+                sb.Append("?fields=" + fields);
             }
-            if (hostname) {
+            if (hostname)
+            {
                 sb.Append(sb.Length == 0 ? "?" : "&");
                 sb.Append("hostname=true");
             }
-            if (security) {
+            if (security)
+            {
                 sb.Append(sb.Length == 0 ? "?" : "&");
                 sb.Append("security=true");
             }
@@ -202,27 +204,27 @@ namespace Objectia.Api
         public IPSecurity() { }
 
         [JsonProperty("is_proxy")]
-        public bool IsProxy { get; set; }   
+        public bool IsProxy { get; set; }
 
         [JsonProperty("proxy_type")]
-        public string ProxyType { get; set; }   
+        public string ProxyType { get; set; }
 
         [JsonProperty("is_crawler")]
-        public bool IsCrawler { get; set; }   
+        public bool IsCrawler { get; set; }
 
         [JsonProperty("crawler_name")]
-        public string CrawlerName { get; set; }   
+        public string CrawlerName { get; set; }
 
         [JsonProperty("crawler_type")]
-        public string CrawlerType { get; set; }   
+        public string CrawlerType { get; set; }
 
         [JsonProperty("is_tor")]
-        public bool IsTOR { get; set; }   
+        public bool IsTOR { get; set; }
 
         [JsonProperty("threat_level")]
-        public string ThreatLevel { get; set; }   
+        public string ThreatLevel { get; set; }
 
         [JsonProperty("threat_types")]
-        public string[] ThreatTypes { get; set; }   
+        public string[] ThreatTypes { get; set; }
     }
 }

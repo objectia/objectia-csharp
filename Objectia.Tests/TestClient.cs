@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System;
 using System.Net;
+using System.IO;
 using System.Net.Security;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -42,11 +43,23 @@ namespace Objectia.Tests
         [TestMethod]
         public async Task GetUsage()
         {
-            var usage = await Api.Usage.GetAsync();
-            Assert.AreNotEqual(0, usage.Requests["geoip"]);
-            //Spew.Dump(usage);
+            try
+            {
+                var usage = await Api.Usage.GetAsync();
+                Assert.AreNotEqual(0, usage.Requests["geoip"]);
+                Spew.Dump(usage);
+            }
+            catch (ResponseException ex)
+            {
+                Console.WriteLine("ResponseException: " + ex.Message + " - status: " + ex.Status.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+            }
         }
 
+        [TestMethod]
         public async Task GetLocation()
         {
             var location = await Api.GeoLocation.GetAsync("8.8.8.8");
@@ -125,10 +138,12 @@ namespace Objectia.Tests
         public async Task CreatePDF()
         {
             var options = new PDFOptions();
-            options.DocumentHTML = "<html>This is a test</html>";
+            options.DocumentHTML = "<html>This is a test from C# API client</html>";
 
             var buf = await Api.PDF.CreateAsync(options);
-            Assert.IsNull(buf);
+            Assert.IsNotNull(buf);
+
+            File.WriteAllBytes("/tmp/pdf-sharp.pdf", buf);
         }
     }
 }
