@@ -41,6 +41,6 @@ namespace Objectia.Api
         public string Text { get; set; }
 
         [JsonProperty("price")]
-        public float Price { get; set; }
+        public double Price { get; set; }
     }
 }

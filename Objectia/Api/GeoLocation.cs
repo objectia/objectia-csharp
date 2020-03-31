@@ -100,10 +100,10 @@ namespace Objectia.Api
         public string Postcode { get; set; }
 
         [JsonProperty("latitude")]
-        public float Latitude = 0;
+        public double Latitude = 0;
 
         [JsonProperty("longitude")]
-        public float Longitude = 0;
+        public double Longitude = 0;
 
         [JsonProperty("phone_prefix")]
         public string PhonePrefix { get; set; }

@@ -26,7 +26,7 @@ namespace Objectia.Api
             public Dictionary<string, int> Requests { get; set; }
 
             [JsonProperty("cost")]
-            public Dictionary<string, float> Cost { get; set; }
+            public Dictionary<string, double> Cost { get; set; }
         }
     }
 }

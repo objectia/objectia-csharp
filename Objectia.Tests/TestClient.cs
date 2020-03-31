@@ -145,5 +145,59 @@ namespace Objectia.Tests
 
             File.WriteAllBytes("/tmp/pdf-sharp.pdf", buf);
         }
+
+        [TestMethod]
+        public async Task GetLatestCurrency()
+        {
+            var res = await Api.Currency.GetLatestAsync();
+            Assert.AreEqual("USD", res.Base);
+
+            res = await Api.Currency.GetLatestAsync("EUR", new string[] { "EUR", "GBP", "USD" });
+            Assert.AreEqual("EUR", res.Base);
+        }
+
+        [TestMethod]
+        public async Task GetHistoricalCurrency()
+        {
+            var yesterday = DateTime.Now.AddDays(-1);
+
+            var res = await Api.Currency.GetHistoricalAsync(yesterday);
+            Assert.AreEqual("USD", res.Base);
+
+            res = await Api.Currency.GetHistoricalAsync(yesterday, "EUR", new string[] { "EUR", "GBP", "USD" });
+            Assert.AreEqual("EUR", res.Base);
+            Spew.Dump(res);
+        }
+
+        [TestMethod]
+        public async Task ConvertCurrency()
+        {
+            var res = await Api.Currency.ConvertAsync(100.0, "USD", "EUR");
+            Assert.AreEqual(100.0, res.Amount);
+        }
+
+        [TestMethod]
+        public async Task CurrencyChanges()
+        {
+            var today = DateTime.Now;
+            var yesterday = today.AddDays(-1);
+
+            var res = await Api.Currency.GetChangeAsync(yesterday, today, "EUR", new string[] { "EUR", "GBP", "USD" });
+            Assert.AreEqual("EUR", res.Base);
+        }
+
+        [TestMethod]
+        public async Task GetTimeframe()
+        {
+            var today = DateTime.Now;
+            var yesterday = today.AddDays(-1);
+
+            var res = await Api.Currency.GetTimeframe("USD", yesterday, today, "EUR");
+            Assert.AreEqual("USD", res.Currency);
+            Assert.AreEqual("EUR", res.Base);
+            Assert.AreEqual(2, res.Timespan);
+            Assert.AreEqual(2, res.Rates.Count);
+            Spew.Dump(res);
+        }
     }
 }
